@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/misPrestamos">
+
+    <fragment
+        android:id="@+id/misPrestamos"
+        android:name="sv.edu.catolica.proyectolibritoabierto.fragment.MisPrestamosFragment"
+        android:label="Mis Prestamos"
+        tools:layout="@layout/fragment_mis_prestamos" />
+
+    <fragment
+        android:id="@+id/busqueda"
+        android:name="sv.edu.catolica.proyectolibritoabierto.fragment.BusquedaFragment"
+        android:label="Buscar"
+        tools:layout="@layout/fragment_busqueda" />
+
+    <fragment
+        android:id="@+id/miPerfil"
+        android:name="sv.edu.catolica.proyectolibritoabierto.fragment.MiPerfilFragment"
+        android:label="Mi Perfil"
+        tools:layout="@layout/fragment_mi_perfil" />
+</navigation>

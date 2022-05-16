@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "714327736549",
+    "project_id": "biblioteca-24be1",
+    "storage_bucket": "biblioteca-24be1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714327736549:android:3755f1dd6337b9ed0b940c",
+        "android_client_info": {
+          "package_name": "sv.edu.catolica.proyectolibritoabierto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714327736549-j8ht8rteetilpvrauepb11l3srjm5e5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0QvDU4yTXxEqDhnmU7H_NG9GAcH0dwZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714327736549-j8ht8rteetilpvrauepb11l3srjm5e5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
