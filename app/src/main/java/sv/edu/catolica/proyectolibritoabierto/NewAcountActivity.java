@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +33,13 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
 
     //Firebase
     private FirebaseFirestore firestore;
-    private boolean state;
+
+    //SharedPreferences
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_EMAIL = "email";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +51,6 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
         email = findViewById(R.id.emailLayout);
         pass = findViewById(R.id.passwordLayout);
 
-
-
         //Adding Listener
         fname.getEditText().addTextChangedListener(this);
         lname.getEditText().addTextChangedListener(this);
@@ -54,7 +59,9 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
 
         //Firebase
         firestore = FirebaseFirestore.getInstance();
-        state = false;
+
+        //SharedPreferences
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
     }
 
@@ -195,12 +202,17 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
 
     private void getValuesForPost() {
         try{
-            state = true;
             String id_user = UUID.randomUUID().toString();
             String nombre = fname.getEditText().getText().toString().trim();
             String apellido = lname.getEditText().getText().toString().trim();
             String correo = email.getEditText().getText().toString().trim();
             String contra = encryptPassword(pass.getEditText().getText().toString().trim());
+
+            //Añadiendo correo al la sharedpreference
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_EMAIL, correo);
+            editor.apply();
+
 
             //INSERT INTO user
             Map<String, Object> UsersMap = new HashMap<>();
@@ -209,9 +221,9 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
             UsersMap.put("last_name", apellido);
             UsersMap.put("email", correo);
             UsersMap.put("password", contra);
-            firestore.collection("user").add(UsersMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            firestore.collection("user").document(correo).set(UsersMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
+                public void onSuccess(Void aVoid) {
                     finish();
                     Intent newAccountView = new Intent(NewAcountActivity.this, HomeActivity.class);
                     startActivity(newAccountView);

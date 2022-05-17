@@ -1,6 +1,8 @@
 package sv.edu.catolica.proyectolibritoabierto;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -25,12 +27,23 @@ import sv.edu.catolica.proyectolibritoabierto.adapter.BookAdapter;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
 
 public class HomeActivity extends AppCompatActivity {
+    //SharedPreferences
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_EMAIL = "email";
 
 
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+
+        if(email != null){
+            Log.v("MENSAJE", email);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
