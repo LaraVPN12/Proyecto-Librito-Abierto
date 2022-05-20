@@ -27,35 +27,23 @@ import sv.edu.catolica.proyectolibritoabierto.adapter.BookAdapter;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
 
 public class HomeActivity extends AppCompatActivity {
-    //SharedPreferences
-    SharedPreferences sharedPreferences;
-    private static final String SHARED_PREF_NAME = "mypref";
-    private static final String KEY_EMAIL = "email";
-
 
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-
-        if(email != null){
-            Log.v("MENSAJE", email);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

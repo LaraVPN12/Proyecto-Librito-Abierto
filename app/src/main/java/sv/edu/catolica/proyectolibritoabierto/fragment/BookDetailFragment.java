@@ -1,10 +1,7 @@
 package sv.edu.catolica.proyectolibritoabierto.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,24 +10,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
 import sv.edu.catolica.proyectolibritoabierto.R;
 import sv.edu.catolica.proyectolibritoabierto.adapter.BookAdapter;
+import sv.edu.catolica.proyectolibritoabierto.adapter.BookDetailsAdapter;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
-import sv.edu.catolica.proyectolibritoabierto.interfaces.*;
 
-public class MisPrestamosFragment extends Fragment{
+public class BookDetailFragment extends Fragment {
     RecyclerView recycler;
-    BookAdapter bAdapter;
+    BookDetailsAdapter bookDetailsAdapter;
     FirebaseFirestore bFirestore;
     View vista;
     Query query;
-    FloatingActionButton fab;
-    Activity activity;
-    IComunicarFragments interfaceComunicator;
+    Bundle tituloRecuperado;
+
 
 
 
@@ -43,31 +42,35 @@ public class MisPrestamosFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        vista = inflater.inflate(R.layout.fragment_mis_prestamos, container, false);
+        vista = inflater.inflate(R.layout.fragment_book_detail, container, false);
 
-        //Inicializar Recycler
-        recycler = vista.findViewById(R.id.rvDatos);
+        //Inicializacion de Elementos
+        recycler = vista.findViewById(R.id.rvDetails);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        query = bFirestore.collection("book");
-        FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-        bAdapter = new BookAdapter(fro);
-        bAdapter.notifyDataSetChanged();
-        recycler.setAdapter(bAdapter);
-
+        tituloRecuperado = getArguments();
+        String tituloSeleccionado = tituloRecuperado.getString("titulo");
+        Log.v("MENSAJE", "Exito con "+ tituloSeleccionado);
+        getBookDetails(tituloSeleccionado);
         return vista;
+    }
+
+    public void getBookDetails(String titulo){
+        query = bFirestore.collection("book").whereEqualTo("title", titulo);
+        FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
+        bookDetailsAdapter = new BookDetailsAdapter(fro);
+        bookDetailsAdapter.notifyDataSetChanged();
+        recycler.setAdapter(bookDetailsAdapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        bAdapter.startListening();
+        bookDetailsAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        bAdapter.stopListening();
+        bookDetailsAdapter.stopListening();
     }
-
 }
