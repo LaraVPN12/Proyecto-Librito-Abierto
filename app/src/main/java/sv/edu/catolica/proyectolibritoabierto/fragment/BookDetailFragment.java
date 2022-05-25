@@ -2,23 +2,17 @@ package sv.edu.catolica.proyectolibritoabierto.fragment;
 
 import android.os.Bundle;
 
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
 import sv.edu.catolica.proyectolibritoabierto.R;
-import sv.edu.catolica.proyectolibritoabierto.adapter.BookAdapter;
 import sv.edu.catolica.proyectolibritoabierto.adapter.BookDetailsAdapter;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
 
@@ -29,9 +23,6 @@ public class BookDetailFragment extends Fragment {
     View vista;
     Query query;
     Bundle tituloRecuperado;
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +40,6 @@ public class BookDetailFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         tituloRecuperado = getArguments();
         String tituloSeleccionado = tituloRecuperado.getString("titulo");
-        Log.v("MENSAJE", "Exito con "+ tituloSeleccionado);
         getBookDetails(tituloSeleccionado);
         return vista;
     }

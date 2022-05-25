@@ -17,4 +17,10 @@
             android:icon="@drawable/user"
             android:title="Mi Perfil" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/cerrarSesion"
+            android:icon="@drawable/icon"
+            android:title="Cerrar Sesión"/>
+    </group>
 </menu>

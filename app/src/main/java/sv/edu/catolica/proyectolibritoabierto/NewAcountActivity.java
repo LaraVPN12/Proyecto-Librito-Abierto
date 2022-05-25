@@ -9,11 +9,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -30,6 +35,7 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
     private TextInputLayout lname;
     private TextInputLayout email;
     private TextInputLayout pass;
+    private boolean userState;
 
     //Firebase
     private FirebaseFirestore firestore;
@@ -50,6 +56,7 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
         lname = findViewById(R.id.lastNameLayout);
         email = findViewById(R.id.emailLayout);
         pass = findViewById(R.id.passwordLayout);
+        userState = false;
 
         //Adding Listener
         fname.getEditText().addTextChangedListener(this);
@@ -194,7 +201,14 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
             builder.setPositiveButton("OK",null);
             builder.create();
             builder.show();
-        }else {
+        } else if (getUser()){
+            builder.setMessage("El correo ingresado ya está en uso");
+            builder.setTitle("ALERTA");
+            builder.setPositiveButton("OK",null);
+            builder.create();
+            builder.show();
+        }
+        else {
             getValuesForPost();
 
         }
@@ -238,6 +252,27 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private boolean getUser(){
+        String correo = email.getEditText().getText().toString().trim();
+        DocumentReference documentReference = firestore.collection("user").document(correo);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        userState = true;
+                    } else {
+                        userState = false;
+                    }
+                } else {
+                    Log.v("MENSAJE", "FAILED ", task.getException());
+                }
+            }
+        });
+        return userState;
     }
 
     //Password Encrypt

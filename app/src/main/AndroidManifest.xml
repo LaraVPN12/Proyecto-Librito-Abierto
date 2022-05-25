@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoLibritoAbierto">
+        <activity android:name=".LoginActivity"></activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.ProyectoLibritoAbierto.NoActionBar"></activity>
+            android:theme="@style/Theme.ProyectoLibritoAbierto.NoActionBar" />
         <activity android:name=".Categories" />
         <activity android:name=".NewAcountActivity" />
         <activity android:name=".PrincipalActivity" />

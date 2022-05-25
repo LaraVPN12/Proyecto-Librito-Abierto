@@ -31,7 +31,7 @@ import sv.edu.catolica.proyectolibritoabierto.model.Book;
 public class BookAdapter extends FirestoreRecyclerAdapter <Book, BookAdapter.ViewHolder> implements View.OnClickListener{
     private ImageView image;
     private String url;
-    View v, view;
+    View v;
     private View.OnClickListener listener;
 
 
@@ -64,7 +64,6 @@ public class BookAdapter extends FirestoreRecyclerAdapter <Book, BookAdapter.Vie
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("MENSAJE", "Ha seleccionado " + book.getTitle());
                 Bundle tituloEnviar = new Bundle();
                 tituloEnviar.putString("titulo", book.getTitle());
 

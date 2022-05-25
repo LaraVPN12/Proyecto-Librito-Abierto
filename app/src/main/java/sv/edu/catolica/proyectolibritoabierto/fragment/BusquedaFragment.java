@@ -2,7 +2,6 @@ package sv.edu.catolica.proyectolibritoabierto.fragment;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,7 +26,7 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
     RecyclerView recycler;
     BookAdapter bAdapter;
     FirebaseFirestore bFirestore;
-    androidx.appcompat.widget.SearchView buscar;
+    android.widget.SearchView buscar;
     View vista;
     String busqueda;
     Query query;
@@ -48,7 +48,6 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
         initListener();
         recycler = vista.findViewById(R.id.rvDatos);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
         if (getBusqueda().isEmpty()){
             query = bFirestore.collection("book");
         } else {

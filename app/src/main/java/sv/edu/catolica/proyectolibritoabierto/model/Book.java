@@ -4,16 +4,18 @@ import java.io.Serializable;
 
 public class Book implements Serializable {
     String id_book, title, author, book_image, summary, categorie;
+    int copy_quantity;
 
     public Book(){}
 
-    public Book(String id_book, String title, String author, String book_image, String summary, String categorie) {
+    public Book(String id_book, String title, String author, String book_image, String summary, String categorie, int copy_quantity) {
         this.id_book = id_book;
         this.title = title;
         this.author = author;
         this.book_image = book_image;
         this.summary = summary;
         this.categorie = categorie;
+        this.copy_quantity = copy_quantity;
     }
 
     public String getId_book() {
@@ -63,4 +65,8 @@ public class Book implements Serializable {
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
+
+    public int getCopy_quantity(){return copy_quantity;}
+
+    public void setCopy_quantity(int copy_quantity){this.copy_quantity = copy_quantity;}
 }

@@ -39,16 +39,50 @@
                 android:text="Colleen Hoover"
                 android:textSize="18sp"
                 android:textStyle="italic"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/black"
                 />
-            <Button
-                android:id="@+id/btnPrestar"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prestar"
-                app:cornerRadius = "20dp"
-                />
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ejemplares Disponibles:"
+                    android:layout_marginEnd="5dp"
+                    />
+                <TextView
+                    android:id="@+id/ejemplares"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnReservar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reservar"
+                    app:cornerRadius = "20dp"
+                    android:layout_marginEnd="5dp"
+                    />
+                <Button
+                    android:id="@+id/btnPrestar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prestar"
+                    app:cornerRadius = "20dp"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
