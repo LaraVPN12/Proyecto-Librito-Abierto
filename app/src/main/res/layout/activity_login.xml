@@ -54,7 +54,7 @@
         >
         //User Name
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailLayout"
+            android:id="@+id/correoLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="#005bea"
             android:layout_width="300dp"
@@ -72,7 +72,7 @@
         </com.google.android.material.textfield.TextInputLayout>
         //Password
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordLayout"
+            android:id="@+id/passLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="#005bea"
             android:layout_width="300dp"

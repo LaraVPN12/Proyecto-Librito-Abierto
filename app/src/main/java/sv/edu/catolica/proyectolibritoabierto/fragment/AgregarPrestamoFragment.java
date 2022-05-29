@@ -30,7 +30,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
@@ -50,21 +53,24 @@ public class AgregarPrestamoFragment extends Fragment{
     MaterialDatePicker.Builder builder2 = MaterialDatePicker.Builder.datePicker();
     MaterialDatePicker materialDatePicker2;
 
-
     //SharedPreferences
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_EMAIL = "email";
+
+    //Calendar
+    Calendar calendar;
+    long today;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         firestore = FirebaseFirestore.getInstance();
 
         //Date Picker
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
         //Toma el dia actual
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
+        today = MaterialDatePicker.todayInUtcMilliseconds();
         calendar.setTimeInMillis(today);
         //Limites del calendario
         CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder();
@@ -157,7 +163,7 @@ public class AgregarPrestamoFragment extends Fragment{
         map.put("email", email);
         map.put("copy_quantity", ejemplares);
         map.put("state", "ACTIVO");
-        firestore.collection("loan").document(book_title).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        firestore.collection("transaction").document(book_title).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 //Referencia al documento

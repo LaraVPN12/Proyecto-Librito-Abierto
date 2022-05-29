@@ -20,4 +20,10 @@ public class PrincipalActivity extends AppCompatActivity {
         Intent newAccountView = new Intent(PrincipalActivity.this, NewAcountActivity.class);
         startActivity(newAccountView);
     }
+
+    public void inicioSesion(View view) {
+        finish();
+        Intent newAccountView = new Intent(PrincipalActivity.this, LoginActivity.class);
+        startActivity(newAccountView);
+    }
 }

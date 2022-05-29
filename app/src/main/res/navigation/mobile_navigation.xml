@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/misPrestamos"
         android:name="sv.edu.catolica.proyectolibritoabierto.fragment.MisPrestamosFragment"
-        android:label="Mis Prestamos"
+        android:label="Mis Transacciones"
         tools:layout="@layout/fragment_mis_prestamos" />
 
     <fragment

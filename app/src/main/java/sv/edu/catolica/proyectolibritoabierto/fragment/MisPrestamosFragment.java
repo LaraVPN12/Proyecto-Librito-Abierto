@@ -62,7 +62,7 @@ public class MisPrestamosFragment extends Fragment{
         //Cargar Datos
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         email = sharedPreferences.getString(KEY_EMAIL, null);
-        query = bFirestore.collection("loan").whereEqualTo("email", email);
+        query = bFirestore.collection("transaction").whereEqualTo("email", email);
         FirestoreRecyclerOptions<Loan> fro = new FirestoreRecyclerOptions.Builder<Loan>().setQuery(query, Loan.class).build();
         loanAdapter = new LoanAdapter(fro);
         loanAdapter.notifyDataSetChanged();

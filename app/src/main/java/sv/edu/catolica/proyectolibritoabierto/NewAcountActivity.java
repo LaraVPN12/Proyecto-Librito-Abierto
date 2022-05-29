@@ -208,7 +208,7 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
             builder.create();
             builder.show();
         }
-        else {
+        else if (!getUser() && isValidName() && isValidLastName() && isValidEmail() && isValidPass()){
             getValuesForPost();
 
         }
@@ -220,7 +220,7 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
             String nombre = fname.getEditText().getText().toString().trim();
             String apellido = lname.getEditText().getText().toString().trim();
             String correo = email.getEditText().getText().toString().trim();
-            String contra = encryptPassword(pass.getEditText().getText().toString().trim());
+            String contra = encryptPassword(pass.getEditText().getText().toString().trim(), correo);
 
             //Añadiendo correo al la sharedpreference
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -276,11 +276,11 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
     }
 
     //Password Encrypt
-    private String encryptPassword(String password) throws Exception{
-        SecretKeySpec secretKey = generateKey(password);
+    private String encryptPassword(String password, String email) throws Exception{
+        SecretKeySpec secretKey = generateKey(email);
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte [] datosEncriptadosByte = cipher.doFinal();
+        byte [] datosEncriptadosByte = cipher.doFinal(password.getBytes());
         String datosEncriptadosString = Base64.encodeToString(datosEncriptadosByte, Base64.DEFAULT);
         return datosEncriptadosString;
     }

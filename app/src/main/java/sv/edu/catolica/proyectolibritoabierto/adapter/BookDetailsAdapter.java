@@ -1,5 +1,6 @@
 package sv.edu.catolica.proyectolibritoabierto.adapter;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import sv.edu.catolica.proyectolibritoabierto.R;
 import sv.edu.catolica.proyectolibritoabierto.fragment.AgregarPrestamoFragment;
+import sv.edu.catolica.proyectolibritoabierto.fragment.ReservarFragment;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
 
 public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDetailsAdapter.ViewHolder> implements View.OnClickListener{
@@ -31,6 +34,8 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
     View vista;
     View.OnClickListener listener;
     FirebaseFirestore  bFirestore;
+    AppCompatActivity activity;
+    Bundle tituloEnviar;
 
     public BookDetailsAdapter(@NonNull FirestoreRecyclerOptions<Book> options) {
         super(options);
@@ -39,7 +44,7 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
     @Override
     protected void onBindViewHolder(@NonNull BookDetailsAdapter.ViewHolder viewHolder, int i, @NonNull Book book) {
         bFirestore = FirebaseFirestore.getInstance();
-
+        tituloEnviar = new Bundle();
         viewHolder.title.setText(book.getTitle());
         viewHolder.author.setText(book.getAuthor());
         viewHolder.description.setText(book.getSummary());
@@ -50,7 +55,7 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(image);
-        DocumentReference docRef = bFirestore.collection("loan").document(book.getTitle());
+        DocumentReference docRef = bFirestore.collection("transaction").document(book.getTitle());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -74,15 +79,26 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
                 }
             }
         });
+        //Boton Prestar
         viewHolder.btnPrestar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle tituloEnviar = new Bundle();
                 tituloEnviar.putString("titulo", book.getTitle());
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity = (AppCompatActivity) view.getContext();
                 AgregarPrestamoFragment fragment = new AgregarPrestamoFragment();
                 fragment.setArguments(tituloEnviar);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.detail, fragment).addToBackStack(null).commit();
+            }
+        });
+        //Boton Reservar
+        viewHolder.btnReservar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tituloEnviar.putString("titulo", book.getTitle());
+                activity = (AppCompatActivity) view.getContext();
+                ReservarFragment fragment = new ReservarFragment();
+                fragment.setArguments(tituloEnviar);
+                fragment.show(activity.getSupportFragmentManager(), "Navegar a Fragment");
             }
         });
     }
