@@ -97,10 +97,15 @@ public class LoginActivity extends AppCompatActivity{
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(KEY_EMAIL, correo);
                                         editor.apply();
-
                                         finish();
-                                        Intent newAccountView = new Intent(LoginActivity.this, HomeActivity.class);
-                                        startActivity(newAccountView);
+
+                                        if (correo.equals("kjlmenjivar@gmail.com")){
+                                            Intent newAccountView = new Intent(LoginActivity.this, AdminActivity.class);
+                                            startActivity(newAccountView);
+                                        } else{
+                                            Intent newAccountView = new Intent(LoginActivity.this, HomeActivity.class);
+                                            startActivity(newAccountView);
+                                        }
                                     } else {
                                         builder.setMessage("La contraseña ingresada es incorrecta");
                                         builder.setTitle("ALERTA");

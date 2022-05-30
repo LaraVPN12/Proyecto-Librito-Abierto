@@ -1,6 +1,8 @@
 package sv.edu.catolica.proyectolibritoabierto.adapter;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +25,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import sv.edu.catolica.proyectolibritoabierto.HomeActivity;
 import sv.edu.catolica.proyectolibritoabierto.R;
 import sv.edu.catolica.proyectolibritoabierto.fragment.AgregarPrestamoFragment;
+import sv.edu.catolica.proyectolibritoabierto.fragment.BookDetailFragment;
+import sv.edu.catolica.proyectolibritoabierto.fragment.MisPrestamosFragment;
 import sv.edu.catolica.proyectolibritoabierto.fragment.ReservarFragment;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
 
@@ -36,7 +41,13 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
     FirebaseFirestore  bFirestore;
     AppCompatActivity activity;
     Bundle tituloEnviar;
+    String email;
+    Context context;
 
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_EMAIL = "email";
     public BookDetailsAdapter(@NonNull FirestoreRecyclerOptions<Book> options) {
         super(options);
     }
@@ -55,30 +66,7 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(image);
-        DocumentReference docRef = bFirestore.collection("transaction").document(book.getTitle());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document =task.getResult();
-                    if (document.exists()){
-                        String estado = String.valueOf(document.getString("state"));
-                        if (estado.equals("ACTIVO")){
-                            viewHolder.btnPrestar.setEnabled(false);
-                            viewHolder.btnReservar.setEnabled(false);
-                        } else{
-                            viewHolder.btnPrestar.setEnabled(true);
-                            viewHolder.btnReservar.setEnabled(true);
-                        }
-                    } else{
-                        viewHolder.btnPrestar.setEnabled(true);
-                        viewHolder.btnReservar.setEnabled(true);
-                    }
-                } else{
-                    Log.v("MENSAJE", "FAILED ", task.getException());
-                }
-            }
-        });
+        buttonState(viewHolder, book);
         //Boton Prestar
         viewHolder.btnPrestar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,5 +119,38 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
             btnPrestar = itemView.findViewById(R.id.btnPrestar);
             btnReservar = itemView.findViewById(R.id.btnReservar);
         }
+    }
+    private void buttonState(BookDetailsAdapter.ViewHolder viewHolder, Book book){
+        context = vista.getContext();
+        //Shared Preferences
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        email = sharedPreferences.getString(KEY_EMAIL, null);
+        DocumentReference docRef = bFirestore.collection("transaction").document(book.getTitle() + "-" + email);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document =task.getResult();
+                    if (document.exists()){
+                        String correo = String.valueOf(document.getString("email"));
+                        if (correo.equals(email)){
+                            String estado = String.valueOf(document.getString("state"));
+                            if (estado.equals("ACTIVO")){
+                                viewHolder.btnPrestar.setEnabled(false);
+                                viewHolder.btnReservar.setEnabled(false);
+                            } else{
+                                viewHolder.btnPrestar.setEnabled(true);
+                                viewHolder.btnReservar.setEnabled(true);
+                            }
+                        }
+                    } else{
+                        viewHolder.btnPrestar.setEnabled(true);
+                        viewHolder.btnReservar.setEnabled(true);
+                    }
+                } else{
+                    Log.v("MENSAJE", "FAILED ", task.getException());
+                }
+            }
+        });
     }
 }

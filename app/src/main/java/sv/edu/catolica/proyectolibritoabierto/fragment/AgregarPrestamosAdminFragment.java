@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -30,23 +30,22 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
 import sv.edu.catolica.proyectolibritoabierto.R;
 
-public class AgregarPrestamoFragment extends Fragment{
+public class AgregarPrestamosAdminFragment extends Fragment {
     View vista;
-    Bundle tituloRecuperado;
+    Bundle tituloRecuperado, emailRecuperado;
     TextView titulo;
     Button fechaPr, fechaDev, ejecutarPrestamos;
     FirebaseFirestore firestore;
     String tituloSeleccionado;
+    EditText user_email;
+    Boolean state;
 
     //DatePicker
     MaterialDatePicker.Builder builder1 = MaterialDatePicker.Builder.datePicker();
@@ -62,11 +61,10 @@ public class AgregarPrestamoFragment extends Fragment{
     //Calendar
     Calendar calendar;
     long today;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         firestore = FirebaseFirestore.getInstance();
-
+        state = false;
         //Date Picker
         calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
@@ -85,17 +83,16 @@ public class AgregarPrestamoFragment extends Fragment{
         builder2.setTitleText("SELECCIONE UNA FECHA");
         builder2.setCalendarConstraints(calendarConstraints.build());
         materialDatePicker2 = builder1.build();
-
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Inicialización de Componentes
-        vista = inflater.inflate(R.layout.fragment_agregar_prestamo, container, false);
+        vista = inflater.inflate(R.layout.fragment_agregar_prestamos_admin, container, false);
         titulo = vista.findViewById(R.id.tituloLibro);
+        user_email = vista.findViewById(R.id.correoPrestamo);
         tituloRecuperado = getArguments();
         tituloSeleccionado = tituloRecuperado.getString("titulo");
         titulo.setText(tituloSeleccionado);
@@ -105,10 +102,10 @@ public class AgregarPrestamoFragment extends Fragment{
 
         //Retornar Date Pickers
         clickListeners();
-
         return vista;
     }
-    public void clickListeners(){
+
+    private void clickListeners() {
         fechaPr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,20 +136,52 @@ public class AgregarPrestamoFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 String book_title = titulo.getText().toString().trim();
+                String correo = user_email.getText().toString().trim();
                 String fechaInicio = fechaPr.getText().toString().trim();
                 String fechaFin = fechaDev.getText().toString().trim();
                 int ejemplares = 1;
-                if(book_title.isEmpty() || fechaInicio.isEmpty() || fechaFin.isEmpty()){
+                if(book_title.isEmpty() || fechaInicio.isEmpty() || fechaFin.isEmpty() || correo.isEmpty()){
                     Toast.makeText(view.getContext(),"Datos Incompletos", Toast.LENGTH_LONG).show();
                 } else{
-                    postLoan(book_title, fechaInicio, fechaFin, ejemplares);
-
-                    hideFragment(view);
+                    if (emailCheck(correo)){
+                        postLoan(book_title, fechaInicio, fechaFin, ejemplares);
+                        hideFragment(view);
+                    } else {
+                        user_email.setText("");
+                    }
                 }
             }
         });
     }
-    private void postLoan(String book_title, String fechaInicio, String fechaFin, int ejemplares){
+
+    private boolean emailCheck(String correo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        DocumentReference documentReference = firestore.collection("user").document(correo);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        state = true;
+                    } else {
+                        builder.setMessage("No se encontró un Usuario con ese correo");
+                        builder.setTitle("ALERTA");
+                        builder.setPositiveButton("OK",null);
+                        builder.create();
+                        builder.show();
+                        state = false;
+                    }
+                } else {
+                    Log.v("MENSAJE", "FAILED ", task.getException());
+                    state = false;
+                }
+            }
+        });
+        return state;
+    }
+
+    private void postLoan(String book_title, String fechaInicio, String fechaFin, int ejemplares) {
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
 
@@ -161,7 +190,12 @@ public class AgregarPrestamoFragment extends Fragment{
         map.put("book_title", book_title);
         map.put("fecha_prestamo", fechaInicio);
         map.put("fecha_devolucion", fechaFin);
-        map.put("email", email);
+        if (email.equals("kjlmenjivar@gmail.com")){
+            email = user_email.getText().toString().trim();
+            map.put("email", email);
+        } else {
+            map.put("email", email);
+        }
         map.put("copy_quantity", ejemplares);
         map.put("state", "ACTIVO");
         firestore.collection("transaction").document(book_title + "-" + email).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -177,7 +211,8 @@ public class AgregarPrestamoFragment extends Fragment{
             }
         });
     }
-    private void updateBook(int ejemplares, String book_title){
+
+    private void updateBook(int ejemplares, String book_title) {
         DocumentReference documentReference = firestore.collection("book").document(book_title);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -211,11 +246,9 @@ public class AgregarPrestamoFragment extends Fragment{
             }
         });
     }
-    private void hideFragment(View view){
+
+    private void hideFragment(View view) {
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         activity.getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
-    private void eliminarReserva(){
-
     }
 }

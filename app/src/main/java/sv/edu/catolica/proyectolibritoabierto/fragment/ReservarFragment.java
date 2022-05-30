@@ -16,8 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
@@ -96,26 +100,61 @@ public class ReservarFragment extends DialogFragment {
         dateTomorrow = calendar.getTime();
         //Fecha de Devolucion Simple
         String stringDateDevolucion = DateFormat.getDateInstance().format(dateTomorrow);
-
+        int ejemplares = 1;
         Map<String, Object>map = new HashMap<>();
         map.put("transaction_type", "RESERVA");
         map.put("book_title", tituloSeleccionado);
         map.put("fecha_prestamo", stringDateReserva);
-        map.put("fecha_prestamo_detalle", String.valueOf(dateNow));
+        map.put("fecha_prestamo_detalle", dateNow);
         map.put("fecha_devolucion", stringDateDevolucion);
-        map.put("fecha_devolucion_detalle", String.valueOf(dateTomorrow));
+        map.put("fecha_devolucion_detalle", dateTomorrow);
         map.put("email", email);
-        map.put("copy_quantity", 1);
+        map.put("copy_quantity", ejemplares);
         map.put("state", "ACTIVO");
 
-        firestore.collection("transaction").document(tituloSeleccionado).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        firestore.collection("transaction").document(tituloSeleccionado + "-" + email).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                updateBook(ejemplares, tituloSeleccionado);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+            }
+        });
+    }
+    private void updateBook(int ejemplares, String book_title){
+        DocumentReference documentReference = firestore.collection("book").document(book_title);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        //Actualizacion del libro
+                        double bd_copy_quantity = document.getDouble("copy_quantity");
+                        double updated_quantity = bd_copy_quantity - ejemplares;
+
+                        Map<String, Object> updateMap = new HashMap<>();
+                        updateMap.put("copy_quantity",updated_quantity);
+                        firestore.collection("book").document(book_title).update(updateMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+                    } else {
+                        Log.v("MENSAJE", "No such document");
+                    }
+                } else {
+                    Log.v("MENSAJE", "FAILED ", task.getException());
+                }
             }
         });
     }

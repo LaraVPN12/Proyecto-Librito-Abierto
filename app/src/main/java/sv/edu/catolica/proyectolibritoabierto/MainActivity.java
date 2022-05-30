@@ -41,9 +41,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (email != null){
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (email.equals("kjlmenjivar@gmail.com")){
+                        finish();
+                        Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                        startActivity(intent);
+                    } else {
+                        finish();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
                 } else{
                     Intent intent = new Intent(MainActivity.this, PrincipalActivity.class);
                     startActivity(intent);

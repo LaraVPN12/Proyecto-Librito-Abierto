@@ -1,5 +1,8 @@
 package sv.edu.catolica.proyectolibritoabierto.adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +31,6 @@ public class LoanAdapter extends FirestoreRecyclerAdapter <Loan, LoanAdapter.Vie
         viewHolder.fecha_prestamo.setText(loan.getFecha_prestamo());
         viewHolder.fecha_devolucion.setText(loan.getFecha_devolucion());
         viewHolder.state.setText(loan.getState());
-
-
     }
 
     @NonNull

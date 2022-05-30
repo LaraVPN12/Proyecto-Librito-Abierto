@@ -66,7 +66,6 @@ public class BookAdapter extends FirestoreRecyclerAdapter <Book, BookAdapter.Vie
             public void onClick(View view) {
                 Bundle tituloEnviar = new Bundle();
                 tituloEnviar.putString("titulo", book.getTitle());
-
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 BookDetailFragment details = new BookDetailFragment();
                 details.setArguments(tituloEnviar);
