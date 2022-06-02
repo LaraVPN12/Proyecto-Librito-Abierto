@@ -29,7 +29,7 @@
                 android:id="@+id/cancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
+                android:text="@string/cancelar"
                 android:layout_marginEnd="5dp"
                 android:backgroundTint="#e63946"
                 />
@@ -37,7 +37,7 @@
                 android:id="@+id/aceptar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aceptar"
+                android:text="@string/aceptar"
                 />
         </LinearLayout>
     </LinearLayout>

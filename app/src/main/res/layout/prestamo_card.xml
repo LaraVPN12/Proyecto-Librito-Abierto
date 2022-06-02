@@ -33,13 +33,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Tipo de Transacción:" />
+                    android:text="@string/tipo_de_transaccion" />
 
                 <TextView
                     android:id="@+id/transaction_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prestamo"
                     android:textColor="@color/black" />
             </LinearLayout>
             //Titulo
@@ -54,13 +53,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Título del Libro:" />
+                    android:text="@string/titulo_libro" />
 
                 <TextView
                     android:id="@+id/book_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IT ENDS WITH US"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -76,13 +74,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Cantidad de Ejemplares:" />
+                    android:text="@string/cantidad_de_ejemplares" />
 
                 <TextView
                     android:id="@+id/copy_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -98,13 +95,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Fecha de Préstamo:" />
+                    android:text="@string/fecha_de_prestamo" />
 
                 <TextView
                     android:id="@+id/fecha_prestamo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20-03-2022"
                     android:textColor="@color/black" />
             </LinearLayout>
             //Fecha de Devolucion
@@ -119,13 +115,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Fecha de Devolución" />
+                    android:text="@string/fecha_de_devolucion" />
 
                 <TextView
                     android:id="@+id/fecha_devolucion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21-03-2022"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -140,13 +135,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Estado:" />
+                    android:text="@string/estado" />
 
                 <TextView
                     android:id="@+id/state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Activo"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>

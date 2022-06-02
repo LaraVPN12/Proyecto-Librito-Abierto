@@ -13,7 +13,7 @@
         <Button
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="#005bea"
@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear Cuenta"
+            android:text="@string/crear_cuenta"
             android:textSize="24sp"
             android:textColor="#005bea"
             android:textStyle="bold"
@@ -31,10 +31,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Completa los siguientes campos"
+        android:text="@string/indicaciones_crear_cuenta"
         android:textSize="16sp"
         android:textColor="#005bea"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="24dp"
         />
     //Name
@@ -45,8 +45,8 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-        android:hint="Nombre"
+        android:layout_marginStart="50dp"
+        android:hint="@string/nombre"
         android:textColorHint="#005bea"
         app:errorEnabled="true"
         >
@@ -65,8 +65,8 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="50dp"
-        android:hint="Apellido"
+        android:layout_marginStart="50dp"
+        android:hint="@string/apellido"
         android:textColorHint="#005bea"
         app:errorEnabled="true"
         >
@@ -85,8 +85,8 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="50dp"
-        android:hint="Correo"
+        android:layout_marginStart="50dp"
+        android:hint="@string/correo"
         android:textColorHint="#005bea"
         app:errorEnabled="true"
         >
@@ -105,8 +105,8 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="50dp"
-        android:hint="Contraseña"
+        android:layout_marginStart="50dp"
+        android:hint="@string/password"
         android:textColorHint="#005bea"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
@@ -130,7 +130,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#005bea"
-            android:text="Crear Cuenta"
+            android:text="@string/crear_cuenta"
             android:textColor="@color/white"
             app:cornerRadius = "20dp"
             android:layout_marginTop="75dp"

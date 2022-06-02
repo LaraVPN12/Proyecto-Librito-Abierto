@@ -8,26 +8,26 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:orientation="horizontal"
+        android:gravity="center"
         >
         <ImageView
             android:id="@+id/imagenDetalle"
             android:layout_width="120dp"
             android:layout_height="180dp"
             android:layout_marginEnd="10dp"
-            />
+            android:contentDescription="@string/image" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
             <TextView
                 android:id="@+id/libroDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="IT ENDS WITH US"
+                android:text="@string/title_book_example"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -36,7 +36,7 @@
                 android:id="@+id/autorDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Colleen Hoover"
+                android:text="@string/book_author_example"
                 android:textSize="18sp"
                 android:textStyle="italic"
                 android:layout_marginBottom="20dp"
@@ -51,14 +51,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ejemplares Disponibles:"
+                    android:text="@string/copy_quantity_example"
                     android:layout_marginEnd="5dp"
                     />
                 <TextView
                     android:id="@+id/ejemplares"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:text="@string/quantity_example"
                     android:textColor="@color/black"
                     />
             </LinearLayout>
@@ -70,7 +70,7 @@
                     android:id="@+id/btnReservar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reservar"
+                    android:text="@string/reservar"
                     app:cornerRadius = "20dp"
                     android:layout_marginEnd="5dp"
                     />
@@ -78,7 +78,7 @@
                     android:id="@+id/btnPrestar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prestar"
+                    android:text="@string/prestar"
                     app:cornerRadius = "20dp"
                     />
             </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Sinopsis"
+                android:text="@string/sinopsis"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -110,7 +110,7 @@
                 android:id="@+id/descripDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                android:text="@string/summary_example"
                 android:textSize="16sp"
                 />
         </LinearLayout>

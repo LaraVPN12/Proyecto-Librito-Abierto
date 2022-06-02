@@ -20,7 +20,6 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.ProyectoLibritoAbierto.NoActionBar" />
-        <activity android:name=".Categories" />
         <activity android:name=".NewAcountActivity" />
         <activity android:name=".PrincipalActivity" />
         <activity android:name=".MainActivity">

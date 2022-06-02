@@ -28,8 +28,6 @@ import java.util.regex.Pattern;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import sv.edu.catolica.proyectolibritoabierto.model.Categorie;
-
 public class NewAcountActivity extends AppCompatActivity implements TextWatcher {
     private TextInputLayout fname;
     private TextInputLayout lname;
@@ -195,22 +193,36 @@ public class NewAcountActivity extends AppCompatActivity implements TextWatcher 
 
     public void crearCuenta(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         if(!isValidName() || !isValidLastName() || !isValidEmail() || !isValidPass()){
             builder.setMessage("Asegurese de completar correctamente los campos");
             builder.setTitle("ALERTA");
             builder.setPositiveButton("OK",null);
             builder.create();
             builder.show();
-        } else if (getUser()){
-            builder.setMessage("El correo ingresado ya está en uso");
-            builder.setTitle("ALERTA");
-            builder.setPositiveButton("OK",null);
-            builder.create();
-            builder.show();
-        }
-        else if (!getUser() && isValidName() && isValidLastName() && isValidEmail() && isValidPass()){
-            getValuesForPost();
-
+        } else {
+            String correo = email.getEditText().getText().toString().trim();
+            DocumentReference documentReference = firestore.collection("user").document(correo);
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()){
+                            builder.setMessage("El correo ingresado ya está en uso");
+                            builder.setTitle("ALERTA");
+                            builder.setPositiveButton("OK",null);
+                            builder.create();
+                            builder.show();
+                            email.getEditText().setText("");
+                        } else {
+                            getValuesForPost();
+                        }
+                    } else {
+                        Log.v("MENSAJE", "FAILED ", task.getException());
+                    }
+                }
+            });
         }
     }
 

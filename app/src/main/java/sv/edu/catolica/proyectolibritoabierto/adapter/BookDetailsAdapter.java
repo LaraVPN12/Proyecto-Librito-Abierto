@@ -129,13 +129,14 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                int cantidad = book.getCopy_quantity();
                 if (task.isSuccessful()){
                     DocumentSnapshot document =task.getResult();
                     if (document.exists()){
                         String correo = String.valueOf(document.getString("email"));
                         if (correo.equals(email)){
                             String estado = String.valueOf(document.getString("state"));
-                            if (estado.equals("ACTIVO")){
+                            if (estado.equals("ACTIVO") || cantidad == 0){
                                 viewHolder.btnPrestar.setEnabled(false);
                                 viewHolder.btnReservar.setEnabled(false);
                             } else{
@@ -144,8 +145,13 @@ public class BookDetailsAdapter extends FirestoreRecyclerAdapter <Book, BookDeta
                             }
                         }
                     } else{
-                        viewHolder.btnPrestar.setEnabled(true);
-                        viewHolder.btnReservar.setEnabled(true);
+                        if (cantidad == 0){
+                            viewHolder.btnPrestar.setEnabled(false);
+                            viewHolder.btnReservar.setEnabled(false);
+                        } else {
+                            viewHolder.btnPrestar.setEnabled(true);
+                            viewHolder.btnReservar.setEnabled(true);
+                        }
                     }
                 } else{
                     Log.v("MENSAJE", "FAILED ", task.getException());

@@ -92,7 +92,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0){
-                    query = bFirestore.collection("transaction").whereEqualTo("transaction_type", "PRESTAMO").whereEqualTo("state", "ACTIVO");
+                    query = bFirestore.collection("transaction").whereEqualTo("transaction_type", "PRESTAMO");
                     FirestoreRecyclerOptions<Loan> fro = new FirestoreRecyclerOptions.Builder<Loan>().setQuery(query, Loan.class).build();
                     loanAdminAdapter = new LoanAdminAdapter(fro);
                     loanAdminAdapter.notifyDataSetChanged();

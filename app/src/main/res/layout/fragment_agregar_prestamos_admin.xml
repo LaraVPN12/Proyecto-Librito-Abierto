@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="Título:"
+                    android:text="@string/titulo"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -40,18 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="end"
-                    android:text="Correo:"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:gravity="center"
-                    android:text="Fecha de Préstamo:"
+                    android:text="@string/correo"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -62,7 +51,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="end"
                     android:gravity="center"
-                    android:text="Fecha de Devolución:"
+                    android:text="@string/fecha_de_prestamo"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -73,7 +62,18 @@
                     android:layout_height="40dp"
                     android:layout_gravity="end"
                     android:gravity="center"
-                    android:text="Cantidad:"
+                    android:text="@string/fecha_de_devolucion"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:text="@string/cantidad"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -91,7 +91,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="Título"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="10dp"
@@ -102,7 +101,7 @@
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
                     android:inputType="textEmailAddress"
-                    android:hint="Correo"
+                    android:hint="@string/ingrese_correo"
                     android:importantForAutofill="no" />
                 <Button
                     android:id="@+id/fechaPr"
@@ -125,7 +124,6 @@
                     android:layout_height="40dp"
                     android:layout_gravity="start"
                     android:gravity="center"
-                    android:text="1"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="10dp"
@@ -137,6 +135,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Realizar Prestamo"/>
+            android:text="@string/realizar_prestamo"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

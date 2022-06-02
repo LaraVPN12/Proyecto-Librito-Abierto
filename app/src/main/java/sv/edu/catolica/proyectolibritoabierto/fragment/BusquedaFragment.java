@@ -2,6 +2,7 @@ package sv.edu.catolica.proyectolibritoabierto.fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,7 +26,7 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
     RecyclerView recycler;
     BookAdapter bAdapter;
     FirebaseFirestore bFirestore;
-    android.widget.SearchView buscar;
+    androidx.appcompat.widget.SearchView buscar;
     View vista;
     String busqueda;
     Query query;
@@ -41,25 +41,13 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_busqueda, container, false);
         //SearchView
         buscar = vista.findViewById(R.id.searchView);
         initListener();
         recycler = vista.findViewById(R.id.rvDatos);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (getBusqueda().isEmpty()){
-            query = bFirestore.collection("book");
-        } else {
-            Log.v("MENSAJE", "Entre");
-            query = bFirestore.collection("book")
-                    .whereEqualTo("author", "Viola Davis")
-            ;
-        }
-        FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-        bAdapter = new BookAdapter(fro);
-        bAdapter.notifyDataSetChanged();
-        recycler.setAdapter(bAdapter);
+        queryStructure(busqueda);
         return vista;
     }
 
@@ -67,33 +55,10 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
         buscar.setOnQueryTextListener(this);
     }
 
-    public String getBusqueda(){
-        return busqueda;
-    }
-    public void filter(){
-        if (busqueda.isEmpty()){
-            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            Query query = bFirestore.collection("book");
-            FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-            bAdapter = new BookAdapter(fro);
-            bAdapter.notifyDataSetChanged();
-            recycler.setAdapter(bAdapter);
-        } else{
-            Log.v("MENSAJE", "Entre");
-            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            Query query = bFirestore.collection("book")
-                    .whereEqualTo("author", "Viola Davis")
-                    ;
-            FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-            bAdapter = new BookAdapter(fro);
-            bAdapter.notifyDataSetChanged();
-            recycler.setAdapter(bAdapter);
-        }
-    }
-
     @Override
     public void onStart() {
         super.onStart();
+        queryStructure(busqueda);
         bAdapter.startListening();
     }
 
@@ -101,19 +66,30 @@ public class BusquedaFragment extends Fragment implements SearchView.OnQueryText
     public void onStop() {
         super.onStop();
         bAdapter.stopListening();
+
     }
 
     @Override
     public boolean onQueryTextSubmit(String s) {
         busqueda = s;
-        return true;
+        queryStructure(busqueda);
+        return false;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
         busqueda = s;
-        //Log.v("MENSAJE", busqueda);
         return false;
     }
-
+    private void queryStructure(String busqueda){
+        if (busqueda.isEmpty()){
+            query = bFirestore.collection("book");
+        } else {
+            query = bFirestore.collection("book").whereEqualTo("title", busqueda);
+        }
+        FirestoreRecyclerOptions<Book> fro = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
+        bAdapter = new BookAdapter(fro);
+        bAdapter.notifyDataSetChanged();
+        recycler.setAdapter(bAdapter);
+    }
 }

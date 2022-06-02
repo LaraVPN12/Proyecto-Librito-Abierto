@@ -25,8 +25,8 @@
                 android:id="@+id/book_title_reservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IT ENDS WITH US"
-                android:textSize="20dp"
+                android:text="@string/title_book_example"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginBottom="10dp"
@@ -43,13 +43,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Tipo de Transacción:" />
+                    android:text="@string/tipo_de_transaccion" />
 
                 <TextView
                     android:id="@+id/transaction_type_reservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prestamo"
                     android:textColor="@color/black" />
             </LinearLayout>
             //Usuario
@@ -64,13 +63,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Usuario:" />
+                    android:text="@string/usuario" />
 
                 <TextView
                     android:id="@+id/usuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="kjlmenjivar@gmail.com"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -86,13 +84,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Cantidad de Ejemplares:" />
+                    android:text="@string/cantidad_de_ejemplares" />
 
                 <TextView
                     android:id="@+id/copy_quantity_reservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -108,13 +105,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Fecha de Préstamo:" />
+                    android:text="@string/fecha_de_prestamo" />
 
                 <TextView
                     android:id="@+id/fecha_prestamo_reservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20-03-2022"
                     android:textColor="@color/black" />
             </LinearLayout>
             //Fecha de Devolucion
@@ -129,13 +125,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Fecha de Devolución" />
+                    android:text="@string/fecha_de_devolucion" />
 
                 <TextView
                     android:id="@+id/fecha_devolucion_reservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21-03-2022"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -150,22 +145,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Estado:" />
+                    android:text="@string/estado" />
 
                 <TextView
                     android:id="@+id/state_reservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Activo"
                     android:textColor="@color/black" />
             </LinearLayout>
             <Button
                 android:id="@+id/efectuarPrestamo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:backgroundTint="@color/black"
-                android:text="Efectuar Préstamo"
+                android:layout_gravity="end"
+                android:text="@string/efectuar_prestamo"
                 android:layout_marginTop="10dp"
                 />
         </LinearLayout>

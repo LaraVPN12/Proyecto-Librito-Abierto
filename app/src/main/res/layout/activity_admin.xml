@@ -11,35 +11,53 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp">
-        <TextView
+        <Button
+            android:id="@+id/cerrarSesionAdmin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seleccione el Tipo de Transacción"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="40dp"
+            android:backgroundTint="#323638"
+            android:text="@string/cerrar_sesion"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="end"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="5dp"
+            android:background="@drawable/item_style"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seleccione_el_tipo_de_transaccion"
+                android:textColor="#323638"
+                android:layout_marginEnd="5dp"
+                />
+
+
+        </LinearLayout>
+
         <Spinner
             android:id="@+id/spTransact"
             android:layout_width="375dp"
             android:layout_height="wrap_content"
             tools:ignore="SpeakableTextPresentCheck"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDatosAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            />
-        <Button
-            android:id="@+id/cerrarSesionAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"/>
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

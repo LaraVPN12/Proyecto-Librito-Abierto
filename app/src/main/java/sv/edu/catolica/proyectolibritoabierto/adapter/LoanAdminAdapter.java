@@ -27,6 +27,7 @@ import sv.edu.catolica.proyectolibritoabierto.model.Loan;
 public class LoanAdminAdapter extends FirestoreRecyclerAdapter<Loan, LoanAdminAdapter.ViewHolder> {
     View vista;
     FirebaseFirestore firestore;
+    DocumentReference documentReference;
     public LoanAdminAdapter(@NonNull FirestoreRecyclerOptions<Loan> options) {
         super(options);
     }
@@ -41,6 +42,7 @@ public class LoanAdminAdapter extends FirestoreRecyclerAdapter<Loan, LoanAdminAd
         viewHolder.fecha_devolucion.setText(loan.getFecha_devolucion());
         viewHolder.state.setText(loan.getState());
         viewHolder.user.setText(loan.getEmail());
+        buttonState(loan.getBook_title(), loan.getEmail(), viewHolder.efectuarDevolucion);
         viewHolder.efectuarDevolucion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +74,7 @@ public class LoanAdminAdapter extends FirestoreRecyclerAdapter<Loan, LoanAdminAd
         }
     }
     private void changeTransactionState(String book_title, String email){
-        DocumentReference documentReference = firestore.collection("transaction").document(book_title+ "-" + email);
+        documentReference = firestore.collection("transaction").document(book_title+ "-" + email);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -89,6 +91,25 @@ public class LoanAdminAdapter extends FirestoreRecyclerAdapter<Loan, LoanAdminAd
                         });
                     }
 
+                } else {
+                    Log.v("MENSAJE", "FAILED ", task.getException());
+                }
+            }
+        });
+    }
+    private void buttonState(String book_title, String email, Button button){
+        documentReference = firestore.collection("transaction").document(book_title+ "-" + email);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        String estado = document.getString("state");
+                        if (estado.equals("DESACTIVO")){
+                            button.setEnabled(false);
+                        }
+                    }
                 } else {
                     Log.v("MENSAJE", "FAILED ", task.getException());
                 }

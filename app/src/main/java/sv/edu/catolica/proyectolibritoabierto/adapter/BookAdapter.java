@@ -34,26 +34,14 @@ public class BookAdapter extends FirestoreRecyclerAdapter <Book, BookAdapter.Vie
     View v;
     private View.OnClickListener listener;
 
-
-
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
     public BookAdapter(@NonNull FirestoreRecyclerOptions<Book> options) {
-
         super(options);
-
     }
 
     @Override
     protected void onBindViewHolder(@NonNull BookAdapter.ViewHolder viewHolder, int i, @NonNull Book book) {
         viewHolder.title.setText(book.getTitle());
         viewHolder.author.setText(book.getAuthor());
-        viewHolder.description.setText(book.getSummary());
         url = book.getBook_image();
         Glide.with(v)
                 .load(url)
@@ -90,13 +78,12 @@ public class BookAdapter extends FirestoreRecyclerAdapter <Book, BookAdapter.Vie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, author, description;
+        TextView title, author;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.libro);
             author = itemView.findViewById(R.id.autor);
-            description = itemView.findViewById(R.id.descrip);
             image = itemView.findViewById(R.id.imagen);
         }
     }

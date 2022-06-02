@@ -14,11 +14,11 @@
         android:layout_height="100dp"
         android:background="@drawable/logo"
         android:layout_marginTop="150dp"
-        />
+        android:contentDescription="@string/icon" />
     <TextView
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Bienvenido a Librito Abierto"
+        android:text="@string/mensaje_bienvenida"
         android:textSize="24sp"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -29,7 +29,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        android:text="Crear Cuenta"
+        android:text="@string/crear_cuenta"
         android:textColor="#005bea"
         app:cornerRadius = "20dp"
         android:layout_marginTop="150dp"
@@ -38,7 +38,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión"
+        android:text="@string/iniciar_sesion"
         android:textColor="@android:color/white"
         style="?attr/materialButtonOutlinedStyle"
         app:strokeColor = "@android:color/white"
