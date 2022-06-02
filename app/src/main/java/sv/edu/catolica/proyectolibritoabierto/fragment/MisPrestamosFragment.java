@@ -28,7 +28,6 @@ import sv.edu.catolica.proyectolibritoabierto.R;
 import sv.edu.catolica.proyectolibritoabierto.adapter.BookAdapter;
 import sv.edu.catolica.proyectolibritoabierto.adapter.LoanAdapter;
 import sv.edu.catolica.proyectolibritoabierto.model.Book;
-import sv.edu.catolica.proyectolibritoabierto.interfaces.*;
 import sv.edu.catolica.proyectolibritoabierto.model.Loan;
 
 public class MisPrestamosFragment extends Fragment{
